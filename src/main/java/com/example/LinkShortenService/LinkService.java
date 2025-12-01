@@ -1,18 +1,16 @@
 package com.example.LinkShortenService;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LinkService {
 
     private final LinkRepository linkRepository;
     private static final int GENERATE_ATTEMPTS = 10;
-
-    public LinkService(LinkRepository linkRepository) {
-        this.linkRepository = linkRepository;
-    }
 
     public Optional<String> getShortenLink(String originalLink) {
         return linkRepository.findByOriginalLink(originalLink)

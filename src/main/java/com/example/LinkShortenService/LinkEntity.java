@@ -1,14 +1,12 @@
 package com.example.LinkShortenService;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class LinkEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,4 +17,9 @@ public class LinkEntity {
 
     @Column
     private String shortenLink;
+
+    public LinkEntity(String originalLink, String shortenLink) {
+        this.originalLink = originalLink;
+        this.shortenLink = shortenLink;
+    }
 }

@@ -3,13 +3,14 @@ services:
     image: "postgres:17"
     container_name: mypostgres_container
     environment:
-      - POSTGRES_PASSWORD=pgpassword
       - POSTGRES_DB=linkdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pgpassword
     ports:
       - "5432:5432"
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
+    restart: "no"
     networks:
       - appnet
     healthcheck:
@@ -17,22 +18,23 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-#
-#  spring-app:
-#    build: .
-#    container_name: myapp
-#    ports:
-#      - "8090:8090"
-#    depends_on:
-#      - postgres
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
-#      - SPRING_DATASOURCE_USERNAME=postgres
-#      - SPRING_DATASOURCE_PASSWORD=1111
-#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-#    restart: unless-stopped
-#    networks:
-#      - appnet
+
+  spring-app:
+    build: .
+    container_name: app_container
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/linkdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=pgpassword
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    restart: "no"
+    networks:
+      - appnet
 
 networks:
   appnet:
