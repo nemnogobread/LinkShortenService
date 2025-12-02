@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LinkEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column
     private String originalLink;
 
-    @Column
+    @Column(unique = true, nullable = false)
     private String shortenLink;
 
     public LinkEntity(String originalLink, String shortenLink) {
