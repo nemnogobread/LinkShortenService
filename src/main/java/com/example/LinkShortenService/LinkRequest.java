@@ -1,8 +1,7 @@
 package com.example.LinkShortenService;
 
-import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
-import java.net.URL;
+import lombok.Data;
 
 @Data
 public class LinkRequest {

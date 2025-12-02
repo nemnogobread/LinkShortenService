@@ -6,5 +6,6 @@ import java.util.Optional;
 
 public interface LinkRepository extends JpaRepository<LinkEntity, Integer> {
     public Optional<LinkEntity> findByOriginalLink(String originalLink);
+
     public Optional<LinkEntity> findByShortenLink(String originalLink);
 }
